@@ -1,48 +1,131 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { login, logout } from './authService'
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
+import {
+  adminManageUser,
+  getUser,
+  getUsers,
+  login,
+  logout,
+  register,
+  updateUser,
+} from './authService'
+import { toast } from 'react-toastify'
 
 let user = localStorage.getItem('user')
+
 if (user) {
   user = JSON.parse(user)
 }
+type User = {
+  _id: string
+  name: string
+  email: string
+  isAdmin: boolean
+  token: string
+} | null
 
 type InitialState = {
-  user: any | null
-  isError: boolean
-  isSuccess: boolean
+  user: User
+  userDetail: {
+    _id: string
+    name: string
+    email: string
+  } | null
+  users: User[]
   isLoading: boolean
+  isSuccess: boolean
+  isError: boolean
 }
 
 const initialState: InitialState = {
-  user: user ? user : null,
-  isError: false,
-  isSuccess: false,
+  user: user as User,
+  userDetail: null,
+  users: [],
   isLoading: false,
+  isSuccess: false,
+  isError: false,
 }
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    resetSuccessState: (state) => {
+      state.isSuccess = false
+    },
+  },
   extraReducers: (builder) => {
-    builder
-      .addCase(login.pending, (state) => {
+    builder.addMatcher(
+      isAnyOf(
+        register.pending,
+        login.pending,
+        updateUser.pending,
+        getUsers.pending,
+        getUser.pending,
+        adminManageUser.pending
+      ),
+      (state) => {
         state.isLoading = true
-      })
-      .addCase(login.fulfilled, (state, action) => {
+        state.isSuccess = false
+        state.isError = false
+      }
+    )
+
+    builder
+      .addMatcher(
+        isAnyOf(
+          register.fulfilled,
+          login.fulfilled,
+          updateUser.fulfilled,
+          logout.fulfilled
+        ),
+        (state, action) => {
+          state.isLoading = false
+          state.isSuccess = true
+          state.user = action.payload
+        }
+      )
+      .addMatcher(isAnyOf(getUsers.fulfilled), (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.user = action.payload
+        state.users = action.payload
       })
-      .addCase(login.rejected, (state, action) => {
+      .addMatcher(isAnyOf(adminManageUser.fulfilled), (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.userDetail = action.payload
+      })
+      .addMatcher(isAnyOf(adminManageUser.fulfilled), (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.userDetail = action.payload
+        toast.success('User updated')
+      })
+
+    builder
+      .addMatcher(isAnyOf(register.rejected, login.rejected), (state) => {
         state.isLoading = false
         state.isError = true
-        state.user = null
+        // state.user = null
       })
-      .addCase(logout.fulfilled, (state, action) => {
-        state.user = action.payload
+      .addMatcher(isAnyOf(updateUser.rejected), (state) => {
+        state.isLoading = false
+        state.isError = true
       })
+      .addMatcher(isAnyOf(getUsers.rejected), (state) => {
+        state.isLoading = false
+        state.isError = true
+        // state.users = []
+      })
+      .addMatcher(
+        isAnyOf(getUser.rejected, adminManageUser.rejected),
+        (state) => {
+          state.isLoading = false
+          state.isError = true
+          // state.userDetail = null
+        }
+      )
   },
 })
 
+export const { resetSuccessState } = authSlice.actions
 export default authSlice.reducer

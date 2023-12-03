@@ -19,7 +19,7 @@ export default function ProductPage({}: Props) {
     if (id) {
       dispatch(getProduct(id))
     }
-  }, [id, dispatch])
+  }, [id])
 
   return (
     <div>

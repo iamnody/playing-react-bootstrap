@@ -25,12 +25,13 @@ export default function NavbarBs({}: Props) {
 
   return (
     <nav>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar bg='dark' variant='dark' collapseOnSelect expand='md'>
         <Container className='px-4 py-2'>
           <Navbar.Brand>
             <Nav.Link to='/' as={NavLink}>
               Oliver Store
             </Nav.Link>
+            {/* <Nav.Link to='/'>Oliver Store</Nav.Link> */}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
@@ -51,6 +52,9 @@ export default function NavbarBs({}: Props) {
                     <FaShoppingCart /> Cart
                   </Nav.Link>
                   <NavDropdown title='Account' id='basic-nav-dropdown'>
+                    <NavDropdown.Item to={'/profile/' + user._id} as={NavLink}>
+                      Profile
+                    </NavDropdown.Item>
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
                     </NavDropdown.Item>
@@ -60,6 +64,19 @@ export default function NavbarBs({}: Props) {
                 <Nav.Link to='/login' as={NavLink}>
                   <FaUser /> Sign In
                 </Nav.Link>
+              )}
+              {user?.isAdmin && (
+                <NavDropdown title='Admin' id='basic-nav-dropdown'>
+                  <NavDropdown.Item to={'AdminProductsPage'} as={NavLink}>
+                    Products
+                  </NavDropdown.Item>
+                  <NavDropdown.Item to={'AdminOrdersPage'} as={NavLink}>
+                    Orders
+                  </NavDropdown.Item>
+                  <NavDropdown.Item to={'AdminUsersPage'} as={NavLink}>
+                    Users
+                  </NavDropdown.Item>
+                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>

@@ -5,7 +5,6 @@ import { AppDispatch, RootState } from '../redux/_store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getProducts } from '../redux/productService'
-import { reset } from '../redux/productSlice'
 
 type Props = {}
 export default function Home({}: Props) {
@@ -14,10 +13,6 @@ export default function Home({}: Props) {
 
   useEffect(() => {
     dispatch(getProducts())
-
-    return () => {
-      dispatch(reset())
-    }
   }, [])
 
   return (

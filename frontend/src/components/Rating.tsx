@@ -8,7 +8,7 @@ type Props = {
 
 const Rating = ({ value, number, color }: Props) => {
   return (
-    <div className='rating'>
+    <>
       {[...Array(5)].map((_, i) => {
         return (
           <span className={'text-' + color} key={i}>
@@ -27,7 +27,7 @@ const Rating = ({ value, number, color }: Props) => {
           {number} review{number && 's'}
         </small>
       </span>
-    </div>
+    </>
   )
 }
 

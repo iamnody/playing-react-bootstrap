@@ -1,7 +1,7 @@
-import { FormEvent, useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FormEvent, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import { login, register } from '../redux/authService'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/_store'
@@ -17,7 +17,6 @@ export default function Auth({}: Props) {
   const isPathnameLogin = pathname === '/login'
 
   const dispatch: AppDispatch = useDispatch()
-
   const { user } = useSelector((state: RootState) => state.auth)
 
   async function submitHandler(e: FormEvent<HTMLFormElement>) {
@@ -39,13 +38,6 @@ export default function Auth({}: Props) {
       toast.error('Authentication failed')
     }
   }
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (user) {
-      navigate('/')
-    }
-  }, [user])
 
   return (
     <div>

@@ -19,7 +19,6 @@ export const getProduct = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       const res = await axios.get(API_URL + 'getProduct/' + id)
-      console.log(res.data)
       return res.data
     } catch (err) {
       return thunkAPI.rejectWithValue('Authentication failed')

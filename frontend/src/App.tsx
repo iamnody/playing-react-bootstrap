@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.scss'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
@@ -7,8 +7,17 @@ import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ProductPage from './pages/ProductPage'
+import ProfilePage from './pages/ProfilePage'
+import { useSelector } from 'react-redux'
+import { RootState } from './redux/_store'
+import AdminOrders from './pages/AdminOrdersPage'
+import AdminProductsPage from './pages/AdminProductsPage'
+import AdminProductManagePage from './pages/AdminProductManagePage'
+import AdminUsersPage from './pages/AdminUsersPage'
+import AdminUserManagePage from './pages/AdminUserManagePage'
 
 export default function App() {
+  const { user } = useSelector((state: RootState) => state.auth)
   return (
     <div>
       <BrowserRouter>
@@ -16,9 +25,45 @@ export default function App() {
         <Container className='p-2'>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Auth />} />
-            <Route path='/register' element={<Auth />} />
+            <Route
+              path='/login'
+              element={!user ? <Auth /> : <Navigate to='/' />}
+            />
+            <Route
+              path='/register'
+              element={!user ? <Auth /> : <Navigate to='/' />}
+            />
+            <Route
+              path='/profile/:id'
+              element={user ? <ProfilePage /> : <Navigate to='/' />}
+            />
             <Route path='/product/:id' element={<ProductPage />} />
+            <Route
+              path='/AdminProductsPage'
+              element={
+                user?.isAdmin ? <AdminProductsPage /> : <Navigate to='/' />
+              }
+            />
+            <Route
+              path='/AdminProductManage/:id?'
+              element={
+                user?.isAdmin ? <AdminProductManagePage /> : <Navigate to='/' />
+              }
+            />
+            <Route
+              path='/AdminUsersPage'
+              element={user?.isAdmin ? <AdminUsersPage /> : <Navigate to='/' />}
+            />
+            <Route
+              path='/AdminUserManagePage/:id'
+              element={
+                user?.isAdmin ? <AdminUserManagePage /> : <Navigate to='/' />
+              }
+            />
+            {/* <Route
+              path='/AdminOrdersPage'
+              element={user?.isAdmin ? <AdminOrders /> : <Navigate to='/' />}
+            /> */}
           </Routes>
         </Container>
         <ToastContainer />
