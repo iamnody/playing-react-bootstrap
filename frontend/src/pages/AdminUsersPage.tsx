@@ -1,16 +1,27 @@
 import { Button, Table } from 'react-bootstrap'
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaTrash } from 'react-icons/fa'
 import { AppDispatch, RootState } from '../redux/_store'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getProducts } from '../redux/productService'
+import { MouseEvent, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getUsers } from '../redux/authService'
+import { deleteUser, getUsers } from '../redux/authService'
 
 type Props = {}
 export default function AdminUsersPage({}: Props) {
   const { users } = useSelector((state: RootState) => state.auth)
   const dispatch: AppDispatch = useDispatch()
+
+  function deleteUserHandler(e: MouseEvent, id: string) {
+    e.preventDefault()
+    if (window.confirm('Delete this user?')) {
+      try {
+        dispatch(deleteUser(id)).unwrap()
+        dispatch(getUsers())
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   useEffect(() => {
     dispatch(getUsers())
@@ -44,7 +55,11 @@ export default function AdminUsersPage({}: Props) {
                         <FaEdit />
                       </Button>
                     </Link>
-                    <Button variant='danger' className='btn-sm'>
+                    <Button
+                      variant='danger'
+                      className='btn-sm'
+                      onClick={(e) => deleteUserHandler(e, xUser._id)}
+                    >
                       <FaTrash />
                     </Button>
                   </td>

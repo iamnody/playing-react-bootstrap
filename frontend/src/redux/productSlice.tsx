@@ -1,13 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { getProduct, getProducts } from './productService'
-
-type InitialState = {
-  product: Product
-  products: Product[]
-  isError: boolean
-  isSuccess: boolean
-  isLoading: boolean
-}
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
+import {
+  createProduct,
+  deleteProduct,
+  getProduct,
+  getProducts,
+} from './productService'
 
 type Product = {
   _id: string
@@ -20,6 +17,13 @@ type Product = {
   countInStock: number
   rating: number
   numReviews: number
+}
+
+type InitialState = {
+  product: Product
+  products: Product[]
+  isError: boolean
+  isLoading: boolean
 }
 
 const initialState: InitialState = {
@@ -37,7 +41,6 @@ const initialState: InitialState = {
   },
   products: [],
   isLoading: false,
-  isSuccess: false,
   isError: false,
 }
 
@@ -45,36 +48,36 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    reset: () => initialState,
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getProduct.pending, (state) => {
+    // fulfilled
+    builder.addMatcher(isAnyOf(getProduct.fulfilled), (state, action) => {
+      state.isLoading = false
+      state.product = action.payload
+    })
+    builder.addMatcher(isAnyOf(getProducts.fulfilled), (state, action) => {
+      state.isLoading = false
+      state.products = action.payload
+    })
+
+    // pending
+    builder.addMatcher(
+      isAnyOf(getProduct.pending, getProducts.pending),
+      (state) => {
         state.isLoading = true
-      })
-      .addCase(getProduct.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.product = action.payload
-      })
-      .addCase(getProduct.rejected, (state, action) => {
+        state.isError = false
+      }
+    )
+
+    // rejected
+    builder.addMatcher(
+      isAnyOf(getProduct.rejected, getProducts.rejected),
+      (state) => {
         state.isLoading = false
         state.isError = true
-        state.product = initialState.product
-      })
-      .addCase(getProducts.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getProducts.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.products = action.payload
-      })
-      .addCase(getProducts.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.products = []
-      })
+      }
+    )
   },
 })
 

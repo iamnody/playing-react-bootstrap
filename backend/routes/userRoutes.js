@@ -4,12 +4,32 @@ const { protect, admin } = require('../middleware/authMiddleware')
 const User = require('../models/userModel')
 const generateToken = require('../utils/generateToken')
 
+router.get('/getUser/:id', protect, admin, getUser())
+router.get('/getUsers', protect, admin, getUsers())
 router.post('/register', register())
 router.post('/login', login())
 router.put('/updateUser', protect, updateUser())
-router.get('/getUsers', protect, admin, getUsers())
-router.get('/getUser/:id', protect, admin, getUser())
 router.put('/adminManageUser/:id', protect, admin, adminManageUser())
+router.delete('/deleteUser/:id', deleteUser())
+
+function getUser() {
+  return asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id).select('-password')
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    })
+  })
+}
+
+function getUsers() {
+  return asyncHandler(async (req, res) => {
+    const users = await User.find({})
+    res.json(users)
+  })
+}
 
 function register() {
   return asyncHandler(async (req, res) => {
@@ -80,25 +100,6 @@ function updateUser() {
   })
 }
 
-function getUsers() {
-  return asyncHandler(async (req, res) => {
-    const users = await User.find({})
-    res.json(users)
-  })
-}
-
-function getUser() {
-  return asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id).select('-password')
-
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    })
-  })
-}
-
 function adminManageUser() {
   return asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
@@ -114,6 +115,18 @@ function adminManageUser() {
     } else {
       res.status(401)
       throw new Error('Update user failed')
+    }
+  })
+}
+
+function deleteUser() {
+  return asyncHandler(async (req, res) => {
+    const user = await User.findByIdAndDelete(req.params.id)
+    if (user) {
+      return res.json(user._id)
+    } else {
+      res.status(404)
+      throw new Error('User not found')
     }
   })
 }

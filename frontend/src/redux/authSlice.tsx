@@ -54,22 +54,6 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      isAnyOf(
-        register.pending,
-        login.pending,
-        updateUser.pending,
-        getUsers.pending,
-        getUser.pending,
-        adminManageUser.pending
-      ),
-      (state) => {
-        state.isLoading = true
-        state.isSuccess = false
-        state.isError = false
-      }
-    )
-
     builder
       .addMatcher(
         isAnyOf(
@@ -93,37 +77,39 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.userDetail = action.payload
-      })
-      .addMatcher(isAnyOf(adminManageUser.fulfilled), (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.userDetail = action.payload
         toast.success('User updated')
       })
 
-    builder
-      .addMatcher(isAnyOf(register.rejected, login.rejected), (state) => {
+    builder.addMatcher(
+      isAnyOf(
+        register.pending,
+        login.pending,
+        updateUser.pending,
+        getUsers.pending,
+        getUser.pending,
+        adminManageUser.pending
+      ),
+      (state) => {
+        state.isLoading = true
+        state.isSuccess = false
+        state.isError = false
+      }
+    )
+
+    builder.addMatcher(
+      isAnyOf(
+        register.rejected,
+        login.rejected,
+        updateUser.rejected,
+        getUsers.rejected,
+        getUser.rejected,
+        adminManageUser.rejected
+      ),
+      (state) => {
         state.isLoading = false
         state.isError = true
-        // state.user = null
-      })
-      .addMatcher(isAnyOf(updateUser.rejected), (state) => {
-        state.isLoading = false
-        state.isError = true
-      })
-      .addMatcher(isAnyOf(getUsers.rejected), (state) => {
-        state.isLoading = false
-        state.isError = true
-        // state.users = []
-      })
-      .addMatcher(
-        isAnyOf(getUser.rejected, adminManageUser.rejected),
-        (state) => {
-          state.isLoading = false
-          state.isError = true
-          // state.userDetail = null
-        }
-      )
+      }
+    )
   },
 })
 

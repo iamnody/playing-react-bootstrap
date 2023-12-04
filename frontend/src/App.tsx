@@ -10,11 +10,11 @@ import ProductPage from './pages/ProductPage'
 import ProfilePage from './pages/ProfilePage'
 import { useSelector } from 'react-redux'
 import { RootState } from './redux/_store'
-import AdminOrders from './pages/AdminOrdersPage'
 import AdminProductsPage from './pages/AdminProductsPage'
-import AdminProductManagePage from './pages/AdminProductManagePage'
+import AdminCreateProductPage from './pages/AdminCreateProductPage'
 import AdminUsersPage from './pages/AdminUsersPage'
 import AdminUserManagePage from './pages/AdminUserManagePage'
+import AdminUpdateProductPage from './pages/AdminUpdateProductPage'
 
 export default function App() {
   const { user } = useSelector((state: RootState) => state.auth)
@@ -45,9 +45,15 @@ export default function App() {
               }
             />
             <Route
-              path='/AdminProductManage/:id?'
+              path='/AdminCreateProductPage'
               element={
-                user?.isAdmin ? <AdminProductManagePage /> : <Navigate to='/' />
+                user?.isAdmin ? <AdminCreateProductPage /> : <Navigate to='/' />
+              }
+            />
+            <Route
+              path='/AdminUpdateProductPage/:id'
+              element={
+                user?.isAdmin ? <AdminUpdateProductPage /> : <Navigate to='/' />
               }
             />
             <Route
