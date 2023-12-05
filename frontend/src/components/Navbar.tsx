@@ -48,7 +48,7 @@ export default function NavbarBs({}: Props) {
 
               {user ? (
                 <>
-                  <Nav.Link to='/cart' as={NavLink}>
+                  <Nav.Link to={'/cartPage/' + user?._id} as={NavLink}>
                     <FaShoppingCart /> Cart
                   </Nav.Link>
                   <NavDropdown title='Account' id='basic-nav-dropdown'>

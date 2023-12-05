@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button, Form } from 'react-bootstrap'
 import { login, register } from '../redux/authService'
-import { useSelector, useDispatch } from 'react-redux'
-import { AppDispatch, RootState } from '../redux/_store'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../redux/_store'
 
 type Props = {}
 export default function Auth({}: Props) {
@@ -17,7 +17,6 @@ export default function Auth({}: Props) {
   const isPathnameLogin = pathname === '/login'
 
   const dispatch: AppDispatch = useDispatch()
-  const { user } = useSelector((state: RootState) => state.auth)
 
   async function submitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()

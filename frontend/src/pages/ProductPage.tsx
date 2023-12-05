@@ -1,9 +1,18 @@
 import { useEffect } from 'react'
-import { Button, Col, Form, Image, ListGroup, Row } from 'react-bootstrap'
+import {
+  Accordion,
+  Button,
+  Col,
+  Form,
+  Image,
+  ListGroup,
+  Row,
+} from 'react-bootstrap'
 import { AppDispatch, RootState } from '../redux/_store'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProduct } from '../redux/productService'
 import { useParams } from 'react-router-dom'
+import Rating from '../components/Rating'
 
 type Props = {}
 
@@ -50,8 +59,72 @@ export default function ProductPage({}: Props) {
           </Button>
         </ListGroup.Item>
       </ListGroup>
-      <h2>Reviews</h2>
-      <h2>Write a Customer Review</h2>
+      <hr />
+      <section className='my-2'>
+        <Accordion defaultActiveKey={['0', '1']} alwaysOpen flush>
+          <Accordion.Item eventKey='0'>
+            <Accordion.Header>Write a Customer Review</Accordion.Header>
+            <Accordion.Body>
+              <Form>
+                <Form.Group className='mb-3' controlId='Rating'>
+                  <Form.Label>Rating</Form.Label>
+                  <Form.Select aria-label='Default select example'>
+                    <option>Select</option>
+                    <option value='3'>5 - Good</option>
+                    <option value='4'>4</option>
+                    <option value='3'>3</option>
+                    <option value='2'>2</option>
+                    <option value='1'>1 - Bad</option>
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className='mb-3' controlId='exampleForm.Comment'>
+                  <Form.Label>Comment</Form.Label>
+                  <Form.Control as='textarea' rows={3} />
+                </Form.Group>
+                <Button variant='primary' type='submit'>
+                  Submit
+                </Button>
+              </Form>
+            </Accordion.Body>
+          </Accordion.Item>
+
+          {/* <hr /> */}
+
+          <Accordion.Item eventKey='1'>
+            <Accordion.Header>Reviews</Accordion.Header>
+            <Accordion.Body>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <div>
+                    <strong>title</strong>
+                  </div>
+                  <div>
+                    <Rating value={4} number={10} />
+                  </div>
+                  <div>2023-12-04</div>
+                  <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Deserunt iusto quis delectus
+                  </div>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <div>
+                    <strong>title</strong>
+                  </div>
+                  <div>
+                    <Rating value={4} number={10} />
+                  </div>
+                  <div>2023-12-04</div>
+                  <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Deserunt iusto quis delectus
+                  </div>
+                </ListGroup.Item>
+              </ListGroup>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      </section>
     </div>
   )
 }

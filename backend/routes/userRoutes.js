@@ -8,6 +8,7 @@ router.get('/getUser/:id', protect, admin, getUser())
 router.get('/getUsers', protect, admin, getUsers())
 router.post('/register', register())
 router.post('/login', login())
+router.post('/saveAddress/:id', protect, saveAddress())
 router.put('/updateUser', protect, updateUser())
 router.put('/adminManageUser/:id', protect, admin, adminManageUser())
 router.delete('/deleteUser/:id', deleteUser())
@@ -75,6 +76,39 @@ function login() {
     }
   })
 }
+
+function saveAddress() {
+  return asyncHandler(async (req, res) => {
+    if (!Object.values(req.body).every((value) => value)) {
+      res.status(401)
+      throw new Error('Address fields cannot be empty')
+    }
+    const user = await User.findById(req.user._id)
+    if (!user) {
+      res.status(401)
+      throw new Error('Update user failed')
+    }
+    user.cart = req.body
+    const updatedUser = await user.save()
+
+    res.json({
+      cart: updatedUser.cart,
+    })
+  })
+}
+
+// console.log(
+//   [
+//     {
+//       name: 'a',
+//       phoneNumber: '456-456',
+//       address: 'asd',
+//       city: 'das',
+//       province: 'aaa',
+//       postalCode: '456dfg',
+//     },
+//   ].every((item) => Object.values(item).every((value) => value))
+// )
 
 function updateUser() {
   return asyncHandler(async (req, res) => {

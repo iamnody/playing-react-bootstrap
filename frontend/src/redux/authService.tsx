@@ -74,6 +74,40 @@ export const login = createAsyncThunk(
   }
 )
 
+export const saveAddress = createAsyncThunk(
+  'auth/saveAddress',
+  async (
+    userData: {
+      name: string
+      phoneNumber: string
+      address: string
+      city: string
+      province: string
+      postalCode: string
+    },
+    thunkAPI
+  ) => {
+    try {
+      const state = thunkAPI.getState() as RootState
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + state.auth.user?.token,
+        },
+      }
+      const response = await axios.post(
+        API_URL + 'saveAddress/' + state.auth.user?._id,
+        userData,
+        config
+      )
+      if (response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data))
+      }
+      return response.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Authentication failed')
+    }
+  }
+)
 export const logout = createAsyncThunk('auth/logout', async () => {
   localStorage.removeItem('user')
   return null

@@ -77,7 +77,6 @@ export const updateProduct = createAsyncThunk(
           Authorization: 'Bearer ' + state.auth.user?.token,
         },
       }
-      console.log(0)
       await axios.put(
         API_URL + 'updateProduct/' + productData.id,
         productData,
