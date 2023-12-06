@@ -52,6 +52,7 @@ export const register = createAsyncThunk(
       if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
       }
+      localStorage.removeItem('cart')
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue('Authentication failed')
@@ -67,6 +68,7 @@ export const login = createAsyncThunk(
       if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
       }
+      localStorage.removeItem('cart')
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue('Authentication failed')
@@ -94,20 +96,18 @@ export const saveAddress = createAsyncThunk(
           Authorization: 'Bearer ' + state.auth.user?.token,
         },
       }
-      const response = await axios.post(
+      await axios.post(
         API_URL + 'saveAddress/' + state.auth.user?._id,
         userData,
         config
       )
-      if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data))
-      }
-      return response.data
-    } catch (error) {
-      return thunkAPI.rejectWithValue('Authentication failed')
+    } catch (error: any) {
+      console.log(error?.response?.data.message || error)
+      return thunkAPI.rejectWithValue('')
     }
   }
 )
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   localStorage.removeItem('user')
   return null

@@ -8,6 +8,7 @@ router.get('/getUser/:id', protect, admin, getUser())
 router.get('/getUsers', protect, admin, getUsers())
 router.post('/register', register())
 router.post('/login', login())
+router.post('/addToCart/:id', protect, addToCart())
 router.post('/saveAddress/:id', protect, saveAddress())
 router.put('/updateUser', protect, updateUser())
 router.put('/adminManageUser/:id', protect, admin, adminManageUser())
@@ -77,10 +78,30 @@ function login() {
   })
 }
 
+function addToCart() {
+  return asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (!user) {
+      res.status(401)
+      throw new Error('User Error')
+    }
+    const item = user.cart.find((x) => x.product.toString() === req.body.id)
+    if (item) {
+      item.qty = item.qty + req.body.qty
+      user.cart.map((x) => (x.product === req.body.id ? item : x))
+    } else {
+      user.cart = [...user.cart, req.body]
+    }
+    const updatedUser = await user.save()
+
+    res.json(updatedUser.cart)
+  })
+}
+
 function saveAddress() {
   return asyncHandler(async (req, res) => {
     if (!Object.values(req.body).every((value) => value)) {
-      res.status(401)
+      res.status(400)
       throw new Error('Address fields cannot be empty')
     }
     const user = await User.findById(req.user._id)
@@ -91,24 +112,9 @@ function saveAddress() {
     user.cart = req.body
     const updatedUser = await user.save()
 
-    res.json({
-      cart: updatedUser.cart,
-    })
+    res.json()
   })
 }
-
-// console.log(
-//   [
-//     {
-//       name: 'a',
-//       phoneNumber: '456-456',
-//       address: 'asd',
-//       city: 'das',
-//       province: 'aaa',
-//       postalCode: '456dfg',
-//     },
-//   ].every((item) => Object.values(item).every((value) => value))
-// )
 
 function updateUser() {
   return asyncHandler(async (req, res) => {

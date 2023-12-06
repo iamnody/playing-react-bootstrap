@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import {
   Accordion,
   Button,
@@ -13,16 +13,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProduct } from '../redux/productService'
 import { useParams } from 'react-router-dom'
 import Rating from '../components/Rating'
+import { addToCart, addToCartLocal } from '../redux/cartService'
+import { createReview } from '../redux/reviewService'
 
 type Props = {}
 
 export default function ProductPage({}: Props) {
-  function addToCartHandler() {}
+  const [qty, setQty] = useState(0)
+  const [rating, setRating] = useState(5)
+  const [comment, setComment] = useState('test111')
 
   const dispatch: AppDispatch = useDispatch()
+  const { user } = useSelector((state: RootState) => state.auth)
   const { product } = useSelector((state: RootState) => state.products)
 
   const { id } = useParams()
+
+  function addToCartHandler() {
+    if (user) {
+      dispatch(addToCart({ id: product._id, qty, price: product.price }))
+    } else {
+      dispatch(addToCartLocal({ id: product._id, qty, price: product.price }))
+    }
+  }
+
+  function submitHandler(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    dispatch(createReview({ id: product._id, rating, comment }))
+  }
 
   useEffect(() => {
     if (id) {
@@ -46,7 +64,11 @@ export default function ProductPage({}: Props) {
           <Col>{product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}</Col>
         </ListGroup.Item>
         <ListGroup.Item>
-          <Form.Control type='number' value='1' />
+          <Form.Control
+            type='number'
+            value={qty}
+            onChange={(e) => setQty(Number(e.target.value))}
+          />
         </ListGroup.Item>
         <ListGroup.Item>
           <Button
@@ -65,10 +87,15 @@ export default function ProductPage({}: Props) {
           <Accordion.Item eventKey='0'>
             <Accordion.Header>Write a Customer Review</Accordion.Header>
             <Accordion.Body>
-              <Form>
+              <Form onSubmit={submitHandler}>
                 <Form.Group className='mb-3' controlId='Rating'>
                   <Form.Label>Rating</Form.Label>
-                  <Form.Select aria-label='Default select example'>
+                  <Form.Select
+                    aria-label='Default select example'
+                    required
+                    value={rating}
+                    onChange={(e) => setRating(Number(e.target.value))}
+                  >
                     <option>Select</option>
                     <option value='3'>5 - Good</option>
                     <option value='4'>4</option>
@@ -79,7 +106,12 @@ export default function ProductPage({}: Props) {
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='exampleForm.Comment'>
                   <Form.Label>Comment</Form.Label>
-                  <Form.Control as='textarea' rows={3} />
+                  <Form.Control
+                    as='textarea'
+                    rows={3}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
                 </Form.Group>
                 <Button variant='primary' type='submit'>
                   Submit

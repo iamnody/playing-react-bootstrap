@@ -3,11 +3,19 @@ const asyncHandler = require('../middleware/asyncHandler')
 const { protect, admin } = require('../middleware/authMiddleware')
 const Product = require('../models/productModel')
 
+const { createReview } = require('../controllers/reviewController')
+
+// api/products
+
+// products
 router.get('/getProducts', getProducts())
 router.get('/getProduct/:id', getProduct())
 router.post('/createProduct', protect, admin, createProduct())
 router.put('/updateProduct/:id', protect, admin, updateProduct())
 router.delete('/deleteProduct/:id', deleteProduct())
+
+// reviews
+router.post('/reviews/createReview/:id', protect, createReview())
 
 function getProduct() {
   return asyncHandler(async (req, res) => {
@@ -43,15 +51,6 @@ function createProduct() {
 
 function updateProduct() {
   return asyncHandler(async (req, res) => {
-    // {
-    //   name: string
-    //   price: number
-    //   image: {}
-    //   brand: string
-    //   category: string
-    //   description: string
-    //   countInStock: number
-    // }
     const product = await Product.findById(req.params.id)
     if (product) {
       product.name = req.body.name || product.name

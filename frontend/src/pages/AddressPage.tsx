@@ -26,7 +26,8 @@ export default function AddressPage({}: Props) {
     )
       .unwrap()
       .then(() => {
-        navigate('/placeOrderPage/' + user?._id)
+        console.log(1)
+        navigate('/PaymentPage/' + user?._id)
       })
   }
 

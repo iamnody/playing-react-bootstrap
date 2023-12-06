@@ -4,7 +4,9 @@ const morgan = require('morgan')
 const cors = require('cors')
 require('./data/mongoose')
 const path = require('path')
-
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
+const colors = require('colors')
+colors.enable()
 const isDev = !(process.env.MODE === 'pro')
 
 const app = express()
@@ -25,6 +27,9 @@ if (!isDev) {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'))
   })
 }
+
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

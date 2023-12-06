@@ -25,7 +25,7 @@ export default function NavbarBs({}: Props) {
 
   return (
     <nav>
-      <Navbar bg='dark' variant='dark' collapseOnSelect expand='md'>
+      <Navbar bg='dark' variant='dark' collapseOnSelect expand={true}>
         <Container className='px-4 py-2'>
           <Navbar.Brand>
             <Nav.Link to='/' as={NavLink}>

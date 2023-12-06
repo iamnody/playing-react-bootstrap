@@ -17,6 +17,8 @@ import AdminUserManagePage from './pages/AdminUserManagePage'
 import AdminUpdateProductPage from './pages/AdminUpdateProductPage'
 import CartPage from './pages/CartPage'
 import AddressPage from './pages/AddressPage'
+import PlaceOrderPage from './pages/PlaceOrderPage'
+import PaymentPage from './pages/PaymentPage'
 
 export default function App() {
   const { user } = useSelector((state: RootState) => state.auth)
@@ -49,12 +51,12 @@ export default function App() {
               element={user ? <AddressPage /> : <Navigate to='/' />}
             />
             <Route
-              path='/paymentPage/:id'
-              element={user ? <AddressPage /> : <Navigate to='/' />}
+              path='/PaymentPage/:id'
+              element={user ? <PaymentPage /> : <Navigate to='/' />}
             />
             <Route
-              path='/placeOrderPage/:id'
-              element={user ? <AddressPage /> : <Navigate to='/' />}
+              path='/PlaceOrderPage/:id'
+              element={user ? <PlaceOrderPage /> : <Navigate to='/' />}
             />
             <Route
               path='/AdminProductsPage'
