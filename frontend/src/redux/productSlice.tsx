@@ -1,20 +1,15 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  createProduct,
-  deleteProduct,
-  getProduct,
-  getProducts,
-} from './productService'
+import { getProduct, getProducts } from './productService'
 
 type Product = {
   _id: string
   name: string
-  image: string
+  images: []
   description: string
   brand: string
   category: string
   price: number
-  countInStock: number
+  quantity: number
   rating: number
   numReviews: number
 }
@@ -30,12 +25,12 @@ const initialState: InitialState = {
   product: {
     _id: '',
     name: '',
-    image: '',
+    images: [],
     description: '',
     brand: '',
     category: '',
     price: 0,
-    countInStock: 0,
+    quantity: 0,
     rating: 0,
     numReviews: 0,
   },
@@ -52,11 +47,11 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     // fulfilled
-    builder.addMatcher(isAnyOf(getProduct.fulfilled), (state, action) => {
+    builder.addCase(getProduct.fulfilled, (state, action) => {
       state.isLoading = false
       state.product = action.payload
     })
-    builder.addMatcher(isAnyOf(getProducts.fulfilled), (state, action) => {
+    builder.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false
       state.products = action.payload
     })

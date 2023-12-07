@@ -26,7 +26,7 @@
       "brand": "Apple",
       "category": "Electronics",
       "price": 89.99,
-      "countInStock": 10,
+      "quantity": 10,
       "rating": 4.5,
       "numReviews": 12
     },
@@ -38,7 +38,7 @@
       "brand": "Apple",
       "category": "Electronics",
       "price": 599.99,
-      "countInStock": 7,
+      "quantity": 7,
       "rating": 4,
       "numReviews": 8
     },
@@ -50,7 +50,7 @@
       "brand": "Cannon",
       "category": "Electronics",
       "price": 929.99,
-      "countInStock": 5,
+      "quantity": 5,
       "rating": 3,
       "numReviews": 12
     },
@@ -62,7 +62,7 @@
       "brand": "Sony",
       "category": "Electronics",
       "price": 399.99,
-      "countInStock": 11,
+      "quantity": 11,
       "rating": 5,
       "numReviews": 12
     },
@@ -74,7 +74,7 @@
       "brand": "Logitech",
       "category": "Electronics",
       "price": 49.99,
-      "countInStock": 7,
+      "quantity": 7,
       "rating": 3.5,
       "numReviews": 10
     },
@@ -86,7 +86,7 @@
       "brand": "Amazon",
       "category": "Electronics",
       "price": 29.99,
-      "countInStock": 0,
+      "quantity": 0,
       "rating": 4,
       "numReviews": 12
     }

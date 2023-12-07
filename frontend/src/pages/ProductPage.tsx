@@ -1,13 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
-import {
-  Accordion,
-  Button,
-  Col,
-  Form,
-  Image,
-  ListGroup,
-  Row,
-} from 'react-bootstrap'
+import { Accordion, Button, Col, Form, Image, ListGroup } from 'react-bootstrap'
 import { AppDispatch, RootState } from '../redux/_store'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProduct } from '../redux/productService'
@@ -50,7 +42,7 @@ export default function ProductPage({}: Props) {
 
   return (
     <div>
-      <Image src={product.image} alt={product.name} fluid />
+      <Image src={product.images[0]?.url} alt={product.name} fluid />
       <ListGroup className='my-2' variant='flush'>
         <ListGroup.Item>
           <h2>{product.name}</h2>
@@ -61,7 +53,7 @@ export default function ProductPage({}: Props) {
       </ListGroup>
       <ListGroup className='my-2' variant=''>
         <ListGroup.Item>
-          <Col>{product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}</Col>
+          <Col>{product.quantity > 0 ? 'In Stock' : 'Out Of Stock'}</Col>
         </ListGroup.Item>
         <ListGroup.Item>
           <Form.Control
@@ -74,7 +66,7 @@ export default function ProductPage({}: Props) {
           <Button
             className='btn-block'
             type='button'
-            disabled={product.countInStock === 0}
+            disabled={product.quantity === 0}
             onClick={addToCartHandler}
           >
             Add To Cart

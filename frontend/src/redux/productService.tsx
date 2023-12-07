@@ -29,18 +29,7 @@ export const getProduct = createAsyncThunk(
 
 export const createProduct = createAsyncThunk(
   'products/createProduct',
-  async (
-    productData: {
-      name: string
-      price: number
-      image: {}
-      brand: string
-      category: string
-      description: string
-      countInStock: number
-    },
-    thunkAPI
-  ) => {
+  async (formData: FormData, thunkAPI) => {
     try {
       const state = thunkAPI.getState() as RootState
       const config = {
@@ -48,7 +37,9 @@ export const createProduct = createAsyncThunk(
           Authorization: 'Bearer ' + state.auth.user?.token,
         },
       }
-      await axios.post(API_URL + 'createProduct', productData, config)
+      console.log(11)
+      await axios.post(API_URL + 'createProduct', formData, config)
+      console.log(22)
     } catch (err) {
       return thunkAPI.rejectWithValue('Authentication failed')
     }
@@ -57,19 +48,7 @@ export const createProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   'products/updateProduct',
-  async (
-    productData: {
-      id: string
-      name: string
-      price: number
-      image: {}
-      brand: string
-      category: string
-      description: string
-      countInStock: number
-    },
-    thunkAPI
-  ) => {
+  async (formData: FormData, thunkAPI) => {
     try {
       const state = thunkAPI.getState() as RootState
       const config = {
@@ -77,14 +56,14 @@ export const updateProduct = createAsyncThunk(
           Authorization: 'Bearer ' + state.auth.user?.token,
         },
       }
-      await axios.put(
-        API_URL + 'updateProduct/' + productData.id,
-        productData,
-        config
-      )
-      console.log(1)
+      // todo fix this
+      // await axios.put(
+      //   API_URL + 'updateProduct/' + id,
+      //   formData,
+      //   config
+      // )
     } catch (err) {
-      return thunkAPI.rejectWithValue('Authentication failed')
+      return thunkAPI.rejectWithValue('')
     }
   }
 )

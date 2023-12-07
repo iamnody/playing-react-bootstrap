@@ -1,4 +1,3 @@
-// const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const colors = require('colors')
 const users = require('./users')
@@ -6,7 +5,7 @@ const products = require('./products')
 const User = require('../models/userModel')
 const Product = require('../models/productModel')
 // const Order = require('../models/orderModel')
-dotenv.config()
+dotenv.config({ path: '../.env' })
 require('./mongoose')
 
 const importData = async () => {

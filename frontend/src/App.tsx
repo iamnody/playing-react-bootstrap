@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.scss'
-import Home from './pages/Home'
+import HomePage from './pages/HomePage'
 import Navbar from './components/Navbar'
 import Auth from './pages/Auth'
 import { Container } from 'react-bootstrap'
@@ -28,7 +28,8 @@ export default function App() {
         <Navbar />
         <Container className='p-2'>
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path='/home/:keyword/:page/:search' element={<HomePage />} />
             <Route
               path='/login'
               element={!user ? <Auth /> : <Navigate to='/' />}

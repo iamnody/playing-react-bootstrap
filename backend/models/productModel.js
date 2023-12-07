@@ -26,9 +26,19 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
+    price: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    description: {
       type: String,
       required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      default: 0,
     },
     brand: {
       type: String,
@@ -38,29 +48,19 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
+    images: [
+      {
+        name: { type: String, required: true, default: 'sample.jpg' },
+        url: { type: String, required: true, default: '/images/sample.jpg' },
+      },
+    ],
     reviews: [reviewSchema],
     rating: {
       type: Number,
-      required: true,
       default: 0,
     },
     numReviews: {
       type: Number,
-      required: true,
-      default: 0,
-    },
-    price: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    countInStock: {
-      type: Number,
-      required: true,
       default: 0,
     },
   },

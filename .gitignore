@@ -1,2 +1,4 @@
 .env
 node_modules
+backend/data/products
+backend/data/data-fs.js

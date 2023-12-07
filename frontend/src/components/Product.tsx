@@ -6,12 +6,14 @@ type Props = {
   product: {
     _id: string
     name: string
-    image: string
+    images: {
+      url: string
+    }[]
     description: string
     brand: string
     category: string
     price: number
-    countInStock: number
+    quantity: number
     rating: number
     numReviews: number
   }
@@ -21,7 +23,7 @@ export default function Product({ product }: Props) {
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant='top' />
+        <Card.Img src={product.images[0].url} variant='top' />
       </Link>
 
       <Card.Body>

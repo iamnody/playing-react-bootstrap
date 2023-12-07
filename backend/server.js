@@ -33,3 +33,6 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
+console.log('/images/airpods.jpg'.split('/'))
+console.log('/images/airpods.jpg'.split('/').pop())

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 import { createProduct } from '../redux/productService'
 import { AppDispatch } from '../redux/_store'
 import { useDispatch } from 'react-redux'
@@ -8,36 +8,40 @@ import AdminProductForm from '../components/AdminProductForm'
 
 type Props = {}
 export default function AdminCreateProductPage({}: Props) {
-  const [name, setName] = useState('testa')
-  const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('')
-  const [brand, setBrand] = useState('a')
-  const [category, setCategory] = useState('a')
-  const [countInStock, setCountInStock] = useState(0)
-  const [description, setDescription] = useState('aaa')
-
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
 
   async function submitHandler(
     e: FormEvent<HTMLFormElement>,
-    formData: {
+    product: {
       name: string
       price: number
-      image: string
+      images: File[]
       brand: string
       category: string
       description: string
-      countInStock: number
+      quantity: number
     }
   ) {
     e.preventDefault()
-    try {
-      await dispatch(createProduct(formData)).unwrap()
 
+    const formData: FormData = new FormData()
+    product.images.forEach((x) => formData.append('files', x))
+    formData.append('name', product.name)
+    formData.append('price', product.price.toString())
+    formData.append('brand', product.brand)
+    formData.append('category', product.category)
+    formData.append('description', product.description)
+    formData.append('quantity', product.quantity.toString())
+
+    try {
+      console.log(1)
+      await dispatch(createProduct(formData)).unwrap()
+      console.log(2)
       toast.success('Product created')
       navigate('/AdminProductsPage')
     } catch (err) {
+      console.log(3)
       toast.error('Creating product failed')
     }
   }
@@ -45,23 +49,7 @@ export default function AdminCreateProductPage({}: Props) {
   return (
     <div>
       <h1>Create Product</h1>
-      <AdminProductForm
-        submitHandler={submitHandler}
-        name={name}
-        setName={setName}
-        price={price}
-        setPrice={setPrice}
-        image={image}
-        setImage={setImage}
-        brand={brand}
-        setBrand={setBrand}
-        category={category}
-        setCategory={setCategory}
-        countInStock={countInStock}
-        setCountInStock={setCountInStock}
-        description={description}
-        setDescription={setDescription}
-      />
+      <AdminProductForm submitHandler={submitHandler} />
     </div>
   )
 }

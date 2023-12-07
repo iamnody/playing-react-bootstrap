@@ -1,76 +1,78 @@
-import { FormEvent } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 
 type AdminProductFormProps = {
   submitHandler: (
     e: FormEvent<HTMLFormElement>,
-    formData: {
+    product: {
       name: string
       price: number
-      image: string
+      images: File[]
       brand: string
       category: string
+      quantity: number
       description: string
-      countInStock: number
     }
-  ) => void // or Promise<void> if the function is async
-  name: string
-  setName: React.Dispatch<React.SetStateAction<string>>
-  price: number
-  setPrice: React.Dispatch<React.SetStateAction<number>>
-  image: string
-  setImage: React.Dispatch<React.SetStateAction<string>>
-  brand: string
-  setBrand: React.Dispatch<React.SetStateAction<string>>
-  category: string
-  setCategory: React.Dispatch<React.SetStateAction<string>>
-  description: string
-  setDescription: React.Dispatch<React.SetStateAction<string>>
-  countInStock: number
-  setCountInStock: React.Dispatch<React.SetStateAction<number>>
+  ) => void
   isUpdate?: boolean
+  initialProduct?: {
+    name: string
+    price: number
+    images: []
+    brand: string
+    category: string
+    quantity: number
+    description: string
+  }
 }
 
 export default function AdminProductForm({
   submitHandler,
-  name,
-  setName,
-  price,
-  setPrice,
-  image,
-  setImage,
-  brand,
-  setBrand,
-  category,
-  setCategory,
-  description,
-  setDescription,
-  countInStock,
-  setCountInStock,
   isUpdate,
+  initialProduct,
 }: AdminProductFormProps) {
+  const [product, setProduct] = useState({
+    name: 'a',
+    price: 0,
+    images: [],
+    brand: 'a',
+    category: 'a',
+    quantity: 0,
+    description: 'a',
+  })
+
+  useEffect(() => {
+    if (isUpdate && initialProduct) {
+      setProduct(initialProduct)
+    }
+  }, [initialProduct, isUpdate])
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'price' || e.target.name === 'quantity') {
+      setProduct({ ...product, [e.target.name]: Number(e.target.value) })
+    } else {
+      setProduct({ ...product, [e.target.name]: e.target.value })
+    }
+  }
+  const handleImagesChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setProduct({ ...product, [e.target.name]: Array.from(e.target.files) })
+    }
+  }
+
   return (
     <Form
-      onSubmit={(e) =>
-        submitHandler(e, {
-          name,
-          price,
-          image,
-          brand,
-          category,
-          description,
-          countInStock,
-        })
-      }
+      onSubmit={(e: FormEvent<HTMLFormElement>) => submitHandler(e, product)}
     >
       <Form.Group controlId='name'>
         <Form.Label>Name</Form.Label>
         <Form.Control
           type='name'
           placeholder='Enter name'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        ></Form.Control>
+          name='name'
+          value={product.name}
+          onChange={handleInputChange}
+        />
       </Form.Group>
 
       <Form.Group controlId='price'>
@@ -78,44 +80,42 @@ export default function AdminProductForm({
         <Form.Control
           type='number'
           placeholder='Enter price'
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
-        ></Form.Control>
+          name='price'
+          value={product.price}
+          onChange={handleInputChange}
+        />
       </Form.Group>
 
-      {/* <Form.Group controlId='image'>
-    <Form.Label>Image</Form.Label>
-    <Form.Control
-      type='text'
-      placeholder='Enter image url'
-      value={image}
-      onChange={(e) => setImage(e.target.value)}
-    ></Form.Control>
-    <Form.Control
-      label='Choose File'
-      onChange={uploadFileHandler}
-      type='file'
-    ></Form.Control>
-  </Form.Group> */}
+      <Form.Group controlId='images'>
+        <Form.Label>Images</Form.Label>
+        <Form.Control
+          type='file'
+          multiple
+          name='images'
+          onChange={handleImagesChange}
+        />
+      </Form.Group>
 
       <Form.Group controlId='brand'>
         <Form.Label>Brand</Form.Label>
         <Form.Control
           type='text'
           placeholder='Enter brand'
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-        ></Form.Control>
+          name='brand'
+          value={product.brand}
+          onChange={handleInputChange}
+        />
       </Form.Group>
 
-      <Form.Group controlId='countInStock'>
+      <Form.Group controlId='quantity'>
         <Form.Label>Count In Stock</Form.Label>
         <Form.Control
           type='number'
-          placeholder='Enter countInStock'
-          value={countInStock}
-          onChange={(e) => setCountInStock(Number(e.target.value))}
-        ></Form.Control>
+          placeholder='Enter quantity'
+          name='quantity'
+          value={product.quantity}
+          onChange={handleInputChange}
+        />
       </Form.Group>
 
       <Form.Group controlId='category'>
@@ -123,9 +123,10 @@ export default function AdminProductForm({
         <Form.Control
           type='text'
           placeholder='Enter category'
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        ></Form.Control>
+          name='category'
+          value={product.category}
+          onChange={handleInputChange}
+        />
       </Form.Group>
 
       <Form.Group controlId='description'>
@@ -133,9 +134,10 @@ export default function AdminProductForm({
         <Form.Control
           type='text'
           placeholder='Enter description'
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        ></Form.Control>
+          name='description'
+          value={product.description}
+          onChange={handleInputChange}
+        />
       </Form.Group>
 
       <Button type='submit' variant='primary' style={{ marginTop: '1rem' }}>
