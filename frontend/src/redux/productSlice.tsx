@@ -17,6 +17,8 @@ type Product = {
 type InitialState = {
   product: Product
   products: Product[]
+  page: number
+  pages: number
   isError: boolean
   isLoading: boolean
 }
@@ -35,6 +37,8 @@ const initialState: InitialState = {
     numReviews: 0,
   },
   products: [],
+  page: 0,
+  pages: 0,
   isLoading: false,
   isError: false,
 }
@@ -53,7 +57,9 @@ export const productSlice = createSlice({
     })
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false
-      state.products = action.payload
+      state.products = action.payload.products
+      state.page = action.payload.page
+      state.pages = action.payload.pages
     })
 
     // pending

@@ -18,18 +18,21 @@ function getProduct() {
 function getProducts() {
   return asyncHandler(async (req, res) => {
     const limit = 2
-    const page = Number(req.query.pageNumber) || 1
-    const keyword = req.query.keyword
+
+    const page = Number(req.query.page) || 1
+
+    const search = req.query.search
       ? {
           name: {
-            $regex: req.query.keyword,
+            $regex: req.query.search,
             $options: 'i',
           },
         }
       : {}
-    const count = await Product.countDocuments({ ...keyword })
 
-    const products = await Product.find({ ...keyword })
+    const count = await Product.countDocuments({ ...search })
+
+    const products = await Product.find({ ...search })
       .limit(limit)
       .skip(limit * (page - 1))
 

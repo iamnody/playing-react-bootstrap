@@ -29,7 +29,9 @@ export default function App() {
         <Container className='p-2'>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/home/:keyword/:page/:search' element={<HomePage />} />
+            <Route path='/page/:page?' element={<HomePage />} />
+            <Route path='/search/:search?' element={<HomePage />} />
+            <Route path='/page/:page?/search/:search?' element={<HomePage />} />
             <Route
               path='/login'
               element={!user ? <Auth /> : <Navigate to='/' />}

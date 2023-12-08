@@ -9,19 +9,22 @@ import Pagination from '../components/Pagination'
 import { useParams } from 'react-router-dom'
 
 type Props = {}
+
 export default function HomePage({}: Props) {
-  const { products } = useSelector((state: RootState) => state.products)
+  const { products, page, pages } = useSelector(
+    (state: RootState) => state.products
+  )
   const dispatch: AppDispatch = useDispatch()
 
-  const { page, keyword } = useParams()
+  const { page: pageNumber, search } = useParams()
 
   useEffect(() => {
-    dispatch(getProducts())
-  }, [])
+    dispatch(getProducts({ page: pageNumber, search }))
+  }, [dispatch, pageNumber, search])
 
   return (
     <div>
-      {/* <Carousel /> */}
+      <Carousel />
       <h1>Latest Products</h1>
       <Row>
         {products.map((product) => (
@@ -30,7 +33,7 @@ export default function HomePage({}: Props) {
           </Col>
         ))}
       </Row>
-      <Pagination />
+      <Pagination page={Number(page)} pages={Number(pages)} search={search} />
     </div>
   )
 }
