@@ -10,18 +10,16 @@ import {
 } from './authService'
 import { toast } from 'react-toastify'
 
-let user = localStorage.getItem('user')
-
-if (user) {
-  user = JSON.parse(user)
-}
-type User = {
-  _id: string
-  name: string
-  email: string
-  isAdmin: boolean
-  token: string
-} | null
+type User =
+  | {
+      _id: string
+      name: string
+      email: string
+      isAdmin: boolean
+      token: string
+    }
+  | null
+  | undefined
 
 type InitialState = {
   user: User
@@ -35,9 +33,17 @@ type InitialState = {
   isSuccess: boolean
   isError: boolean
 }
+// todo
+let user = localStorage.getItem('user')
+
+if (user) {
+  user = JSON.parse(user)
+}
 
 const initialState: InitialState = {
-  user: user as User,
+  // todo
+  // user: user as User,
+  user: user,
   userDetail: null,
   users: [],
   isLoading: false,

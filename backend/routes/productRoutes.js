@@ -1,8 +1,6 @@
 const router = require('express').Router()
-const asyncHandler = require('../middleware/asyncHandler')
 const { protect, admin } = require('../middleware/authMiddleware')
 const upload = require('../middleware/multerMiddleware')
-const Product = require('../models/productModel')
 
 const {
   getProduct,

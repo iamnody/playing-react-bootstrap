@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Image } from 'react-bootstrap'
 
 type AdminProductFormProps = {
   submitHandler: (
@@ -40,6 +40,7 @@ export default function AdminProductForm({
     quantity: 0,
     description: 'a',
   })
+  const [preview, setPreview] = useState<string[]>([])
 
   useEffect(() => {
     if (isUpdate && initialProduct) {
@@ -47,13 +48,31 @@ export default function AdminProductForm({
     }
   }, [initialProduct, isUpdate])
 
+  useEffect(() => {
+    if (isUpdate) return
+    if (!product.images.length) {
+      setPreview([])
+      return
+    }
+    const urlArray = product.images.map((x) => URL.createObjectURL(x))
+    setPreview(urlArray)
+    return () => {
+      if (urlArray) {
+        urlArray.forEach((x) => URL.revokeObjectURL(x))
+      }
+    }
+  }, [product.images])
+
+  console.log(product.images)
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'price' || e.target.name === 'quantity') {
+    if (['price', 'quantity'].includes(e.target.name)) {
       setProduct({ ...product, [e.target.name]: Number(e.target.value) })
     } else {
       setProduct({ ...product, [e.target.name]: e.target.value })
     }
   }
+
   const handleImagesChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setProduct({ ...product, [e.target.name]: Array.from(e.target.files) })
@@ -61,9 +80,7 @@ export default function AdminProductForm({
   }
 
   return (
-    <Form
-      onSubmit={(e: FormEvent<HTMLFormElement>) => submitHandler(e, product)}
-    >
+    <Form onSubmit={(e) => submitHandler(e, product)}>
       <Form.Group controlId='name'>
         <Form.Label>Name</Form.Label>
         <Form.Control
@@ -86,15 +103,26 @@ export default function AdminProductForm({
         />
       </Form.Group>
 
-      <Form.Group controlId='images'>
+      <Form.Group className='' controlId='images'>
         <Form.Label>Images</Form.Label>
-        <Form.Control
-          type='file'
-          multiple
-          name='images'
-          onChange={handleImagesChange}
-        />
+        <div className='drop-box'>
+          <Image src='/cloud.png' fluid />
+          <p className='drop-box-text'>Drag & Drop your files here</p>
+          <Form.Control
+            type='file'
+            multiple
+            name='images'
+            onChange={handleImagesChange}
+          />
+        </div>
       </Form.Group>
+      {preview && (
+        <div className='preview'>
+          {preview.map((x, i) => (
+            <Image className='' key={i} src={x} fluid />
+          ))}
+        </div>
+      )}
 
       <Form.Group controlId='brand'>
         <Form.Label>Brand</Form.Label>

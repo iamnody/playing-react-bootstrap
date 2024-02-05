@@ -1,0 +1,133 @@
+[
+  {
+    "name": "Terry Medhurst",
+    "email": "a@a.com",
+    "password": "$2a$10$W5JVV5XUSE6gneRVLPXfo./BYFkjD4z.RJB50xF4ogBgkqa1SFDgW",
+    "isAdmin": true
+  },
+  {
+    "name": "Sheldon Quigley",
+    "email": "hbingley1@plala.or.jp",
+    "password": "$2a$10$MLHOYYckqZ9MiPS/nlaCb.RXFA0f3xzM3IL8mn0NV26rUPm0/8fY."
+  },
+  {
+    "name": "Terrill Hills",
+    "email": "rshawe2@51.la",
+    "password": "$2a$10$U9y0TyPH186jpPP5JIVHDutZ24W/2R5IOSlB.msTvhCLlXzacMHHu"
+  },
+  {
+    "name": "Miles Cummerata",
+    "email": "yraigatt3@nature.com",
+    "password": "$2a$10$1Md1vXiQ6WvKX2RlyCfzI.itIW83LrhBimAvnIt3ua4RAe.6J/nPe"
+  },
+  {
+    "name": "Mavis Schultz",
+    "email": "kmeus4@upenn.edu",
+    "password": "$2a$10$iocp.4.haVnfFBIjJksdOeLonrByR2JkiE0CCtCTOglJYcogefpWe"
+  },
+  {
+    "name": "Alison Reichert",
+    "email": "jtreleven5@nhs.uk",
+    "password": "$2a$10$WTnQAeezAIdJEgMBsRQ8KODZpMIZ.Tk2CIT0wEsw0VMVegXsEPkrW"
+  },
+  {
+    "name": "Oleta Abbott",
+    "email": "dpettegre6@columbia.edu",
+    "password": "$2a$10$JwGLyhE./fn2BCw1X3Q7gOZs6PZomZNBLpxY52us3O.5gFKfVFpg."
+  },
+  {
+    "name": "Ewell Mueller",
+    "email": "ggude7@chron.com",
+    "password": "$2a$10$zrBRkg.LtHEqjsapwDwYtuwM3T/ZOF2KAI8bmgFDgT8zPjWEI95Ra"
+  },
+  {
+    "name": "Demetrius Corkery",
+    "email": "nloiterton8@aol.com",
+    "password": "$2a$10$MhWY1y878grgeg7wwBXYiOXLida1eI28OxnVSbJF5LOuPVJL0wqd."
+  },
+  {
+    "name": "Eleanora Price",
+    "email": "umcgourty9@jalbum.net",
+    "password": "$2a$10$lZ4WgZ9jxOw2pFRyAsTZtuPbGCFcvYvF0MiF4vihJRd0wqoqG58CS"
+  },
+  {
+    "name": "Marcel Jones",
+    "email": "acharlota@liveinternet.ru",
+    "password": "$2a$10$paZpiZrNV/qDZ63/C8PHVOsz21vL3CFJXA5I2IR4C1oNMwIXj2uYi"
+  },
+  {
+    "name": "Assunta Rath",
+    "email": "rhallawellb@dropbox.com",
+    "password": "$2a$10$6fT3f5Dv1vSR1sNk1aA2BuZfrRKw3uw1GJ7Swk.pBdAqw30c/2y6W"
+  },
+  {
+    "name": "Trace Douglas",
+    "email": "lgribbinc@posterous.com",
+    "password": "$2a$10$N/OaCPjmEZT8PZWy51PfLejB66AYnmOPXBs7HiNXY2OLx9ffozDx."
+  },
+  {
+    "name": "Enoch Lynch",
+    "email": "mturleyd@tumblr.com",
+    "password": "$2a$10$KGLlh/UBve4omIFGJVNKYuhYXd2uooCkZIIfz2PhGo2wp6mwUPduu"
+  },
+  {
+    "name": "Jeanne Halvorson",
+    "email": "kminchelle@qq.com",
+    "password": "$2a$10$z1a56nwVlbdV3obbkj1/4uGOUwnvOD5wsRlyP2O7BvfCDvtoxe/Y6"
+  },
+  {
+    "name": "Trycia Fadel",
+    "email": "dpierrof@vimeo.com",
+    "password": "$2a$10$YJfuAfWYglxYK8gefYVk9uk2cLK9UG1ooFRxWxj7ycChlryUy4Lcu"
+  },
+  {
+    "name": "Bradford Prohaska",
+    "email": "vcholdcroftg@ucoz.com",
+    "password": "$2a$10$EnGpBPBQovDB3c7UzkSYUO7Q7ErJzfHyaZGEBd8wv1eYKJNW63n2S"
+  },
+  {
+    "name": "Arely Skiles",
+    "email": "sberminghamh@chron.com",
+    "password": "$2a$10$Ca3TYxQoIoZ320NmsdUsKeXLseKU3RTtFiSAI9ZfiwNRuQ8XYjsMS"
+  },
+  {
+    "name": "Gust Purdy",
+    "email": "bleveragei@so-net.ne.jp",
+    "password": "$2a$10$sNN2tFl6Miwnck8EKMEsdut4JViGwKjvKDxcVR2MP0vwjBqXOhbca"
+  },
+  {
+    "name": "Lenna Renner",
+    "email": "aeatockj@psu.edu",
+    "password": "$2a$10$xBhJoPp/awfqJ4Hq.3/tT.Bh926pt33tKF3C9ifHj2dwUti9vg2GO"
+  },
+  {
+    "name": "Doyle Ernser",
+    "email": "ckensleyk@pen.io",
+    "password": "$2a$10$BEwE6iA3uqHGBqNydaTpjORiYjHyc3CPXenmYqm1SoEKp8zcvDLra"
+  },
+  {
+    "name": "Tressa Weber",
+    "email": "froachel@howstuffworks.com",
+    "password": "$2a$10$PQsL5mHIOUx2iFkD694uMu9kNwK46MPzuLOnku8lhrL4cJwOsYisO"
+  },
+  {
+    "name": "Felicity O'Reilly",
+    "email": "beykelhofm@wikispaces.com",
+    "password": "$2a$10$KgbsMG/.GdIusAMrTpNXX.QGcWmf72MYcH7elC7RakFYIgHjwYP/2"
+  },
+  {
+    "name": "Jocelyn Schuster",
+    "email": "brickeardn@fema.gov",
+    "password": "$2a$10$2hnITi2HhYKeUZpNPzp0FuWTkz4ofS9WeoO96CaABwoYZeXLKHbHK"
+  },
+  {
+    "name": "Edwina Ernser",
+    "email": "dfundello@amazon.co.jp",
+    "password": "$2a$10$35bFtCUdAJfJRq5eOWq8Z.Xewt6IFIvnHl519FNfRe2Ase5hqBuwu"
+  },
+  {
+    "name": "Griffin Braun",
+    "email": "lgronaverp@cornell.edu",
+    "password": "$2a$10$sMSrc98VOvYJpbT/di4Moelj2QdXYaWpho4ejvAJpiLMC4PeXDNki"
+  }
+]

@@ -24,6 +24,7 @@ export default function HomePage({}: Props) {
 
   return (
     <div>
+      <img src='/cloud.png' alt='' />
       <Carousel />
       <h1>Latest Products</h1>
       <Row>

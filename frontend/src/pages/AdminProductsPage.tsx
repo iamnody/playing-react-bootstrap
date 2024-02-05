@@ -16,12 +16,12 @@ export default function AdminProductsPage({}: Props) {
     if (window.confirm('Delete this product?')) {
       dispatch(deleteProduct(id))
         .unwrap()
-        .then(() => dispatch(getProducts()))
+        .then(() => dispatch(getProducts({})))
     }
   }
 
   useEffect(() => {
-    dispatch(getProducts())
+    dispatch(getProducts({}))
   }, [dispatch])
 
   return (

@@ -1,13 +1,17 @@
 const mongoose = require('mongoose')
 
+const { Schema, model } = mongoose
+
 const reviewSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: 'User',
+    // },
+    name: { type: String, required: true },
     rating: { type: Number, required: true },
+    title: { type: String, required: true },
     comment: { type: String, required: true },
   },
   {
@@ -18,7 +22,7 @@ const reviewSchema = mongoose.Schema(
 const productSchema = mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },
@@ -31,11 +35,16 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    discount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     description: {
       type: String,
       required: true,
     },
-    quantity: {
+    qty: {
       type: Number,
       required: true,
       default: 0,
@@ -68,6 +77,28 @@ const productSchema = mongoose.Schema(
     timestamps: true,
   }
 )
+
+reviewSchema.post('save', function () {
+  const product = this.parent()
+
+  product.numReviews = product.reviews.length
+  product.rating =
+    product.reviews.reduce((sum, review) => sum + review.rating, 0) /
+    product.numReviews
+
+  product.save()
+})
+
+reviewSchema.post('remove', function () {
+  const product = this.parent()
+
+  product.numReviews = product.reviews.length
+  product.rating =
+    product.reviews.reduce((sum, review) => sum + review.rating, 0) /
+    product.numReviews
+
+  product.save()
+})
 
 const Product = mongoose.model('Product', productSchema)
 

@@ -33,7 +33,8 @@ export default function AdminUpdateProductPage({}: Props) {
     e.preventDefault()
     const updatedData = { ...product, id }
     try {
-      await dispatch(updateProduct(updatedData)).unwrap()
+      // ! todo updateProduct
+      // await dispatch(updateProduct(updatedData)).unwrap()
       toast.success('Product updated')
     } catch (error) {
       toast.error('Updating failed')

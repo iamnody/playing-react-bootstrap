@@ -7,6 +7,7 @@ const path = require('path')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 const colors = require('colors')
 colors.enable()
+
 const isDev = !(process.env.MODE === 'pro')
 
 const app = express()

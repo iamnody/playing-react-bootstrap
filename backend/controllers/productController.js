@@ -17,7 +17,7 @@ function getProduct() {
 
 function getProducts() {
   return asyncHandler(async (req, res) => {
-    const limit = 2
+    const limit = 12
 
     const page = Number(req.query.page) || 1
 

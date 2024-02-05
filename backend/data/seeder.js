@@ -1,10 +1,10 @@
 const dotenv = require('dotenv')
-const colors = require('colors')
-const users = require('./users')
-const products = require('./products')
+const users = require('./users.json')
+const products = require('./products.json')
 const User = require('../models/userModel')
 const Product = require('../models/productModel')
 // const Order = require('../models/orderModel')
+
 dotenv.config({ path: '../.env' })
 require('./mongoose')
 
@@ -24,10 +24,10 @@ const importData = async () => {
 
     await Product.insertMany(sampleProducts)
 
-    console.log('Data Imported!'.green.inverse)
+    console.log('Data Imported!')
     process.exit()
   } catch (error) {
-    console.error(`${error}`.red.inverse)
+    console.error(error)
     process.exit(1)
   }
 }
@@ -38,10 +38,10 @@ const destroyData = async () => {
     await Product.deleteMany()
     await User.deleteMany()
 
-    console.log('Data Destroyed!'.red.inverse)
+    console.log('Data Destroyed!')
     process.exit()
   } catch (error) {
-    console.error(`${error}`.red.inverse)
+    console.error(error)
     process.exit(1)
   }
 }

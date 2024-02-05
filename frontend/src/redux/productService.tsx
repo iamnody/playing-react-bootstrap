@@ -49,9 +49,7 @@ export const createProduct = createAsyncThunk(
           Authorization: 'Bearer ' + state.auth.user?.token,
         },
       }
-      console.log(11)
       await axios.post(API_URL + 'createProduct', formData, config)
-      console.log(22)
     } catch (err) {
       return thunkAPI.rejectWithValue('Authentication failed')
     }
